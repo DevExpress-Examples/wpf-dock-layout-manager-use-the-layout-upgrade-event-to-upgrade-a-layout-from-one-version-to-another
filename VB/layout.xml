@@ -1,0 +1,58 @@
+﻿<XtraSerializer version="1.0" application="DockLayoutManager">
+  <property name="#LayoutVersion">1</property>
+  <property name="$DockLayoutManager" iskey="true" value="DockLayoutManager">
+    <property name="ManualClosedPanelsBarVisibility">false</property>
+    <property name="Items" iskey="true" value="5">
+      <property name="Item1" isnull="true" iskey="true">
+        <property name="SerializableDockSituation" iskey="true" value="0" />
+        <property name="ParentCollectionName" isnull="true" />
+        <property name="TypeName">LayoutGroup</property>
+        <property name="ParentName" isnull="true" />
+        <property name="SerializableSelectedTabPageIndex">-1</property>
+        <property name="Orientation">Vertical</property>
+        <property name="Name">root</property>
+      </property>
+      <property name="Item2" isnull="true" iskey="true">
+        <property name="ParentCollectionName" isnull="true" />
+        <property name="TypeName">LayoutGroup</property>
+        <property name="ParentName">root</property>
+        <property name="SerializableDockSituation" iskey="true" value="0" />
+        <property name="SerializableSelectedTabPageIndex">-1</property>
+        <property name="Name">layoutGroup1</property>
+      </property>
+      <property name="Item3" isnull="true" iskey="true">
+        <property name="SerializableDockSituation" iskey="true" value="0" />
+        <property name="TypeName">DocumentGroup</property>
+        <property name="ParentName">layoutGroup1</property>
+        <property name="ParentCollectionName" isnull="true" />
+        <property name="SerializableSelectedTabPageIndex">1</property>
+        <property name="Name">documentGroup1</property>
+      </property>
+      <property name="Item4" isnull="true" iskey="true">
+        <property name="TypeName">DocumentPanel</property>
+        <property name="ParentName">documentGroup1</property>
+        <property name="SerializableDockSituation" iskey="true" value="0" />
+        <property name="ParentCollectionName" isnull="true" />
+        <property name="SerializableFloatingOffset">0,0</property>
+        <property name="SerializableIsMaximized">false</property>
+        <property name="SerializableFloatingBounds">0,0,0,0</property>
+        <property name="Caption" type="System.String">Document2</property>
+        <property name="Name">docuemntPanel2</property>
+        <property name="SerializableMDIBounds">0,0,NaN,NaN</property>
+      </property>
+      <property name="Item5" isnull="true" iskey="true">
+        <property name="IsActive">true</property>
+        <property name="TypeName">DocumentPanel</property>
+        <property name="ParentName">documentGroup1</property>
+        <property name="SerializableDockSituation" iskey="true" value="0" />
+        <property name="ParentCollectionName" isnull="true" />
+        <property name="SerializableIsMaximized">false</property>
+        <property name="SerializableFloatingBounds">0,0,0,0</property>
+        <property name="SerializableFloatingOffset">0,0</property>
+        <property name="Caption" type="System.String">Document1</property>
+        <property name="Name">docuemntPanel1</property>
+        <property name="SerializableMDIBounds">0,0,NaN,NaN</property>
+      </property>
+    </property>
+  </property>
+</XtraSerializer>
