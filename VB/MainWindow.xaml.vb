@@ -1,56 +1,74 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Windows
-Imports System.Windows.Controls
-Imports System.Windows.Data
-Imports System.Windows.Documents
-Imports System.Windows.Forms
-Imports System.Windows.Input
-Imports System.Windows.Media
-Imports System.Windows.Media.Imaging
-Imports System.Windows.Navigation
-Imports System.Windows.Shapes
-Imports System.Xml.Serialization
-Imports System.ComponentModel
+﻿Imports System.Windows
 Imports DevExpress.Xpf.Docking
-
 Imports DevExpress.Xpf.Core.Serialization
-Imports DevExpress.Mvvm.UI.Interactivity
-Imports DevExpress.Utils.Serializing
+Imports DevExpress.Mvvm
+Imports System.Collections.ObjectModel
+Imports System.IO
+Imports DevExpress.Xpf.Grid
+Imports DevExpress.Xpf.Core
 
-Namespace Q557494
-    ''' <summary>
-    ''' Interaction logic for MainWindow.xaml
-    ''' </summary>
-    Partial Public Class MainWindow
-        Inherits Window
+Namespace DXSample
+	Partial Public Class MainWindow
+		Inherits Window
 
-        Public Sub New()
-            InitializeComponent()
-            DXSerializer.AddLayoutUpgradeHandler(DockManager, AddressOf layoutUpgrade)
-        End Sub
-        Private Sub layoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
-            If e.RestoredVersion = "1" Then
-                documentGroup1.MDIStyle = MDIStyle.MDI
-            End If
-        End Sub
-        Private Sub Button_Click_1(ByVal sender As Object, ByVal e As RoutedEventArgs)
-            DockManager.SaveLayoutToXml("..//..//layout.xml")
-        End Sub
+		Private Const layoutPath As String = "../../layout.xml"
+		Private Const workspaceName As String = "TestWorkspace"
+		Public Property Items() As ObservableCollection(Of Item)
+		Public Sub New()
+			Items = New ObservableCollection(Of Item)()
+			For i As Integer = 0 To 99
+				Dim item As New Item With {
+					.Group = i Mod 5,
+					.Name = String.Format("Name_{0}", i)
+				}
+				Items.Add(item)
+			Next i
+			DataContext = Me
+			InitializeComponent()
+		End Sub
+		Private Sub OnSaveClick(ByVal sender As Object, ByVal e As RoutedEventArgs)
+			Dim manager = WorkspaceManager.GetWorkspaceManager(dockLayoutManager)
+			manager.CaptureWorkspace(workspaceName)
+			manager.SaveWorkspace(workspaceName, layoutPath)
+		End Sub
+		Private Sub OnRestoreClick(ByVal sender As Object, ByVal e As RoutedEventArgs)
+			If File.Exists(layoutPath) Then
+				Dim manager = WorkspaceManager.GetWorkspaceManager(dockLayoutManager)
+				manager.LoadWorkspace(workspaceName, layoutPath)
+				manager.ApplyWorkspace(workspaceName)
+			End If
+		End Sub
+		Private Sub OnDockLayoutManagerLayoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
+			If e.RestoredVersion = "1.0" Then
+				documentGroup1.MDIStyle = MDIStyle.MDI
+			End If
+		End Sub
+		Private Sub OnGridControlLayoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
+			If e.RestoredVersion = "1.0" Then
+				DirectCast(sender, GridControl).GroupBy("Group")
+			End If
+		End Sub
+	End Class
+	Public Class Item
+		Inherits BindableBase
 
-        Private Sub Button_Click_2(ByVal sender As Object, ByVal e As RoutedEventArgs)
-            DockManager.RestoreLayoutFromXml("..//..//layout.xml")
-        End Sub
-
-        Private Sub Button_Click(ByVal sender As Object, ByVal e As RoutedEventArgs)
-            Dim layoutVersion As String = DXSerializer.GetLayoutVersion(DockManager)
-            Dim number As Integer = Integer.Parse(layoutVersion)
-            number += 1
-            DXSerializer.SetLayoutVersion(DockManager, number.ToString())
-        End Sub
-    End Class
-
+		Private _group As Integer
+		Private _name As String
+		Public Property Group() As Integer
+			Get
+				Return _group
+			End Get
+			Set(ByVal value As Integer)
+				SetProperty(_group, value, "Group")
+			End Set
+		End Property
+		Public Property Name() As String
+			Get
+				Return _name
+			End Get
+			Set(ByVal value As String)
+				SetProperty(_name, value, "Name")
+			End Set
+		End Property
+	End Class
 End Namespace
-
