@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Q557494
+namespace DXSample
 {
     /// <summary>
     /// Interaction logic for App.xaml

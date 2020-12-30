@@ -1,62 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
-using System.ComponentModel;
+﻿using System.Windows;
 using DevExpress.Xpf.Docking;
-
 using DevExpress.Xpf.Core.Serialization;
-using DevExpress.Mvvm.UI.Interactivity;
-using DevExpress.Utils.Serializing;
+using DevExpress.Mvvm;
+using System.Collections.ObjectModel;
+using System.IO;
+using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.Core;
 
-namespace Q557494
-{
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
+namespace DXSample {
+    public partial class MainWindow : Window {
+        const string layoutPath = @"../../layout.xml";
+        const string workspaceName = "TestWorkspace";
+        public ObservableCollection<Item> Items { get; set; }
+        public MainWindow() {
+            Items = new ObservableCollection<Item>();
+            for (int i = 0; i < 100; i++) {
+                var item = new Item { Group = i % 5, Name = string.Format("Name_{0}", i) };
+                Items.Add(item);
+            }
+            DataContext = this;
             InitializeComponent();
-            DXSerializer.AddLayoutUpgradeHandler(DockManager, layoutUpgrade);
         }
-        private void layoutUpgrade(object sender, LayoutUpgradeEventArgs e)
-        {
-            if (e.RestoredVersion == "1")
-            {
+        void OnSaveClick(object sender, RoutedEventArgs e) {
+            var manager = WorkspaceManager.GetWorkspaceManager(dockLayoutManager);
+            manager.CaptureWorkspace(workspaceName);
+            manager.SaveWorkspace(workspaceName, layoutPath);
+        }
+        void OnRestoreClick(object sender, RoutedEventArgs e) {
+            if (File.Exists(layoutPath)) {
+                var manager = WorkspaceManager.GetWorkspaceManager(dockLayoutManager);
+                manager.LoadWorkspace(workspaceName, layoutPath);
+                manager.ApplyWorkspace(workspaceName);
+            }
+        }
+        void OnDockLayoutManagerLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
+            if (e.RestoredVersion == "1.0") {
                 documentGroup1.MDIStyle = MDIStyle.MDI;
             }
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            DockManager.SaveLayoutToXml("..//..//layout.xml");
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            DockManager.RestoreLayoutFromXml("..//..//layout.xml");
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string layoutVersion = DXSerializer.GetLayoutVersion(DockManager);
-            int number = int.Parse(layoutVersion);
-            number++;
-            DXSerializer.SetLayoutVersion(DockManager, number.ToString());
+        void OnGridControlLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
+            if (e.RestoredVersion == "1.0") {
+                ((GridControl)sender).GroupBy("Group");
+            }
         }
     }
-
+    public class Item : BindableBase {
+        int _group;
+        string _name;
+        public int Group {
+            get { return _group; }
+            set { SetProperty(ref _group, value, "Group"); }
+        }
+        public string Name {
+            get { return _name; }
+            set { SetProperty(ref _name, value, "Name"); }
+        }
+    }
 }
-
