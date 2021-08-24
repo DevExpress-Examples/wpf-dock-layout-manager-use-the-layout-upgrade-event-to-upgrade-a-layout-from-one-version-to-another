@@ -19,5 +19,12 @@ void OnDockLayoutManagerLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
     }
 }
 ```
+```vb
+Private Sub OnDockLayoutManagerLayoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
+	If e.RestoredVersion = "1.0" Then
+		documentGroup1.MDIStyle = MDIStyle.MDI
+	End If
+End Sub
+```
 
 We raise `LayoutUpgrade` if the restored layout version is different from the current `LayoutVersion` value. I.e., you can increase `LayoutVersion` in a new version of your application and do the required changes in the `LayoutUpgrade` event handler.
