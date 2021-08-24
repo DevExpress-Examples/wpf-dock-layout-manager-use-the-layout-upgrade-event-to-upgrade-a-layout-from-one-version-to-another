@@ -21,9 +21,9 @@ void OnDockLayoutManagerLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
 ```
 ```vb
 Private Sub OnDockLayoutManagerLayoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
-	If e.RestoredVersion = "1.0" Then
-		'...
-	End If
+    If e.RestoredVersion = "1.0" Then
+        '...
+    End If
 End Sub
 ```
 
