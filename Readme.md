@@ -22,7 +22,7 @@ void OnDockLayoutManagerLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
 ```vb
 Private Sub OnDockLayoutManagerLayoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
 	If e.RestoredVersion = "1.0" Then
-		documentGroup1.MDIStyle = MDIStyle.MDI
+		'...
 	End If
 End Sub
 ```
