@@ -1,3 +1,8 @@
+<!-- default badges list -->
+![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/128642518/14.1.5%2B)
+[![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T163763)
+[![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
+<!-- default badges end -->
 # How to use the LayoutUpgrade event to upgrade a layout from one version to another
 
 Let's suppose that you have an application and [save/restore the layout there](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts). If you change certain layout settings in a new version of this application (e.g., show a panel, add another column, rearrange groups), these changes may be overridden when you restore the layout.
