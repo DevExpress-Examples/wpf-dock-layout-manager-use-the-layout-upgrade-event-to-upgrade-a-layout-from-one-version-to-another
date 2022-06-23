@@ -11,10 +11,10 @@ Use the `DXSerializer.LayoutUpgrade` event and the `DXSerializer.LayoutVersion` 
 
 ```xml
 <dxdo:DockLayoutManager
-    ...
-    dx:DXSerializer.LayoutUpgrade="OnDockLayoutManagerLayoutUpgrade"
-    dx:DXSerializer.LayoutVersion="2.0"
-    ... />
+...
+dx:DXSerializer.LayoutUpgrade="OnDockLayoutManagerLayoutUpgrade"
+dx:DXSerializer.LayoutVersion="2.0"
+... />
 ```
 
 ```cs
