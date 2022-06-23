@@ -5,9 +5,9 @@
 <!-- default badges end -->
 # WPF Dock Layout Manager - Use the Layout Upgrade Event to Upgrade a Layout from One Version to Another
 
-Let's suppose that you have an application and [save/restore the layout there](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts). If you change certain layout settings in a new version of this application (e.g., show a panel, add another column, rearrange groups), these changes may be overridden when you restore the layout.
+You may have an application and [save/restore](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts) its layout. If you change layout settings(show a panel, add another column, rearrange groups, and other), you can override these changes when you restore the layout.
 
-You can use the `DXSerializer.LayoutUpgrade` event and the `DXSerializer.LayoutVersion` property to maintain such changes.
+Use the `DXSerializer.LayoutUpgrade` event and the `DXSerializer.LayoutVersion` property to maintain changes.
 
 ```xml
 <dxdo:DockLayoutManager
@@ -32,4 +32,4 @@ Private Sub OnDockLayoutManagerLayoutUpgrade(ByVal sender As Object, ByVal e As 
 End Sub
 ```
 
-We raise `LayoutUpgrade` if the restored layout version is different from the current `LayoutVersion` value. I.e., you can increase `LayoutVersion` in a new version of your application and do the required changes in the `LayoutUpgrade` event handler.
+The `LayoutUpgrade` event is raised if the restored layout version is different from the current `LayoutVersion` value. You can increase `LayoutVersion` in a new version of your application and do the required changes in the `LayoutUpgrade` event handler.
