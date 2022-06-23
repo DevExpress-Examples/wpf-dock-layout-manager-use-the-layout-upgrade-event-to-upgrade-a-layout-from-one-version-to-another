@@ -33,3 +33,7 @@ End Sub
 ```
 
 The `LayoutUpgrade` event is raised if the restored layout version is different from the current `LayoutVersion` value. You can increase `LayoutVersion` in a new version of your application and do the required changes in the `LayoutUpgrade` event handler.
+
+## Documentation
+
+- [Save/Restore Control Layout](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts)
