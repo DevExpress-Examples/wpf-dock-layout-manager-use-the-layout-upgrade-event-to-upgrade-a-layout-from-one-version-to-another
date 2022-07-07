@@ -1,4 +1,4 @@
-﻿<XtraSerializer version="1.0" application="DockLayoutManager">
+<XtraSerializer version="1.0" application="DockLayoutManager">
   <property name="#LayoutVersion">1.0</property>
   <property name="$DockLayoutManager" iskey="true" value="DockLayoutManager">
     <property name="Items" iskey="true" value="5">
