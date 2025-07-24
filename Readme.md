@@ -4,7 +4,7 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# WPF Dock Layout Manager - Upgrade layouts between versions
+# WPF Dock Layout Manager - Upgrade the app layout to a newer version
 
 You may have an application and [save/restore](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts) its layout. If you change layout settings(show a panel, add another column, rearrange groups, and other), you can override these changes when you restore the layout.
 
