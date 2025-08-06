@@ -4,47 +4,90 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# WPF Dock Layout Manager - Upgrade the app layout to a newer version
 
-You may have an application and [save/restore](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts) its layout. If you change layout settings(show a panel, add another column, rearrange groups, and other), you can override these changes when you restore the layout.
+# WPF Dock Layout Manager – Upgrade the Application Layout Between Versions
 
-Use the `DXSerializer.LayoutUpgrade` event and the `DXSerializer.LayoutVersion` property to maintain changes.
+Use this example if your application allows users to save and restore layouts, and you need to evolve the layout structure across different versions of the app.
 
-```xml
-<dxdo:DockLayoutManager
-...
-dx:DXSerializer.LayoutUpgrade="OnDockLayoutManagerLayoutUpgrade"
-dx:DXSerializer.LayoutVersion="2.0"
-... />
+![Upgrade the Application Layout Between Versions](./Images/restore-version.jpg)
+
+When the layout changes (for example, panels are added, MDI mode is introduced, or groups are rearranged), previously saved layouts may become outdated or incomplete. This example helps you to do the following:
+
+- Detect the layout version being restored.
+- Apply conditional upgrade logic for both [`DockLayoutManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager) and nested controls (such as [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl)).
+- Ensure backward compatibility and keep your layout flexible and up to date.
+
+## Implementation Details
+
+### Version Management
+
+The [`DXSerializer.LayoutVersion`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutVersion) property marks the version of the current layout. The [`ComboBoxEdit`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Editors.ComboBoxEdit) control allows you to change this version at runtime:
+
+```xaml
+<dxe:ComboBoxEdit EditValue="{Binding ElementName=dockLayoutManager, Path=(dx:DXSerializer.LayoutVersion)}">
+    <sys:String>1.0</sys:String>
+    <sys:String>2.0</sys:String>
+</dxe:ComboBoxEdit>
 ```
 
-```cs
+### Saving and Restoring Layouts
+
+The layout is saved and restored with the help of [`WorkspaceManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.WorkspaceManager). The manager writes the layout to disk as an XML file and can reapply it later:
+
+```csharp
+manager.CaptureWorkspace("TestWorkspace");
+manager.SaveWorkspace("TestWorkspace", layoutPath);
+manager.LoadWorkspace("TestWorkspace", layoutPath);
+manager.ApplyWorkspace("TestWorkspace");
+```
+
+### Upgrade Logic
+
+When the restored layout comes from an older version, custom upgrade handlers are triggered through the [`DXSerializer.LayoutUpgrade`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutUpgradeEvent) event.
+
+* For the [`DockLayoutManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager), the handler switches the MDI style if the layout version is `"1.0"`:
+
+```csharp
 void OnDockLayoutManagerLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
     if (e.RestoredVersion == "1.0") {
-        //...
+        documentGroup1.MDIStyle = MDIStyle.MDI;
     }
 }
 ```
-```vb
-Private Sub OnDockLayoutManagerLayoutUpgrade(ByVal sender As Object, ByVal e As LayoutUpgradeEventArgs)
-    If e.RestoredVersion = "1.0" Then
-        '...
-    End If
-End Sub
+
+* For the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl), the handler applies grouping based on the restored version:
+
+```csharp
+void OnGridControlLayoutUpgrade(object sender, LayoutUpgradeEventArgs e) {
+    if (e.RestoredVersion == "1.0") {
+        ((GridControl)sender).GroupBy("Group");
+    }
+}
 ```
 
-The `LayoutUpgrade` event is raised if the restored layout version is different from the current `LayoutVersion` value. You can increase `LayoutVersion` in a new version of your application and do the required changes in the `LayoutUpgrade` event handler.
+This logic ensures that older layouts can be upgraded to match the latest application structure and behavior.
 
-<!-- default file list -->
-## Files to Look At
+## Files to Review
 
 * [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
 * [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
-<!-- default file list end -->
 
 ## Documentation
 
-- [Save/Restore Control Layout](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts)
+* [DockLayoutManager](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager)
+* [Layout Management](https://docs.devexpress.com/WPF/115547/controls-and-libraries/layout-management)
+* [DXSerializer.LayoutVersion](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutVersion)
+* [DXSerializer.LayoutUpgradeEvent](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutUpgradeEvent)
+* [Save/Restore Control Layout](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts)
+
+## More Examples
+
+* [WPF Dock Layout Manager – Move a Layout Item in Code](https://github.com/DevExpress-Examples/wpf-docklayoutmanager-move-a-layout-item-in-code)
+* [WPF Dock Layout Manager – Serialize Custom Panels and Their Properties](https://github.com/DevExpress-Examples/wpf-dock-layout-manager-serialize-custom-panels-and-their-properties)
+* [WPF Dock Layout Manager – Serialize DockLayoutManager When You Use the TabbedDocumentUIService](https://github.com/DevExpress-Examples/wpf-docklayoutmanager-serialize-docklayoutmanager-when-tabbeddocumentuiservice-is-used)
+* [WPF Dock Layout Manager – Populate a LayoutGroup with ViewModel Collection](https://github.com/DevExpress-Examples/wpf-docklayoutmanager-display-viewmodels-collection-in-layoutgroup)
+* [WPF Dock Layout Manager – Bind the View Model Collection with LayoutAdapters](https://github.com/DevExpress-Examples/wpf-docklayoutmanager-bind-view-model-collection-with-layoutadapters)
+
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
 
