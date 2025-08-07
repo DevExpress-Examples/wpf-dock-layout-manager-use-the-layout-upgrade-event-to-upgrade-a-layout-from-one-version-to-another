@@ -7,21 +7,20 @@
 
 # WPF Dock Layout Manager – Upgrade the Application Layout Between Versions
 
-This example allows you to save and restore layouts and change the layout structure across different versions of the app.
+When you change the application layout (for example, adding new panels, enabling MDI mode, or rearranging groups) previously saved layouts may become outdated or incompatible. This example saves and restores layouts while supporting structural changes across different versions of the application.
+
+Use this example to:
+* Detect the version of the layout being restored.
+* Apply upgrade logic to adjust the layout for both [`DockLayoutManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager) and nested controls like [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl).
+* Preserve backward compatibility while keeping layouts aligned with the current application structure.
 
 ![Upgrade the Application Layout Between Versions](./Images/restore-version.jpg)
-
-When the layout changes (for example, panels are added, MDI mode is introduced, or groups are rearranged), previously saved layouts may become outdated or incomplete. This example helps you to do the following:
-
-- Detect the layout version being restored.
-- Apply conditional upgrade logic for both [`DockLayoutManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager) and nested controls (such as [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl)).
-- Ensure backward compatibility and keep your layout flexible and up to date.
 
 ## Implementation Details
 
 ### Version Management
 
-The [`DXSerializer.LayoutVersion`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutVersion) property marks the version of the current layout. The [`ComboBoxEdit`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Editors.ComboBoxEdit) control allows you to change this version at runtime:
+The [`DXSerializer.LayoutVersion`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutVersion) property specifies the version of the current layout. In this example, the [`ComboBoxEdit`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Editors.ComboBoxEdit) control allows the user to change the current layout version:
 
 ```xaml
 <dxe:ComboBoxEdit EditValue="{Binding ElementName=dockLayoutManager, Path=(dx:DXSerializer.LayoutVersion)}">
@@ -32,7 +31,7 @@ The [`DXSerializer.LayoutVersion`](https://docs.devexpress.com/WPF/DevExpress.Xp
 
 ### Save and Restore Layouts
 
-Save and restore the layout through the [`WorkspaceManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.WorkspaceManager). The manager writes the layout to disk as an XML file and can reapply it later:
+Use the [`WorkspaceManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.WorkspaceManager) component to save the application layout to an XML file and restore it when needed:
 
 ```csharp
 manager.CaptureWorkspace("TestWorkspace");
@@ -43,7 +42,7 @@ manager.ApplyWorkspace("TestWorkspace");
 
 ### Upgrade Logic
 
-When the restored layout comes from an older version, custom upgrade handlers are triggered through the [`DXSerializer.LayoutUpgrade`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutUpgradeEvent) event.
+When a layout from an older version is restored, the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl) and  `DockLayoutManager` raise the [`DXSerializer.LayoutUpgrade`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutUpgrade) event to apply custom upgrade logic and adapt the layout to the current version of the application.
 
 * For the [`DockLayoutManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager), the handler switches the MDI style if the layout version is `"1.0"`:
 
