@@ -7,7 +7,7 @@
 
 # WPF Dock Layout Manager – Upgrade the Application Layout Between Versions
 
-Use this example if your application allows users to save and restore layouts, and you need to evolve the layout structure across different versions of the app.
+This example allows you to save and restore layouts and change the layout structure across different versions of the app.
 
 ![Upgrade the Application Layout Between Versions](./Images/restore-version.jpg)
 
@@ -30,9 +30,9 @@ The [`DXSerializer.LayoutVersion`](https://docs.devexpress.com/WPF/DevExpress.Xp
 </dxe:ComboBoxEdit>
 ```
 
-### Saving and Restoring Layouts
+### Save and Restore Layouts
 
-The layout is saved and restored with the help of [`WorkspaceManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.WorkspaceManager). The manager writes the layout to disk as an XML file and can reapply it later:
+Save and restore the layout through the [`WorkspaceManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.WorkspaceManager). The manager writes the layout to disk as an XML file and can reapply it later:
 
 ```csharp
 manager.CaptureWorkspace("TestWorkspace");
