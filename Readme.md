@@ -42,7 +42,7 @@ manager.ApplyWorkspace("TestWorkspace");
 
 ### Upgrade Logic
 
-When a layout from an older version is restored, the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl) and  `DockLayoutManager` raise the [`DXSerializer.LayoutUpgrade`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutUpgrade) event to apply custom upgrade logic and adapt the layout to the current version of the application.
+When a layout from an older version is restored, the [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridCell.GridControl) and `DockLayoutManager` raise the [`DXSerializer.LayoutUpgrade`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Serialization.DXSerializer.LayoutUpgrade) event to apply custom upgrade logic and adapt the layout to the current version of the application.
 
 * For the [`DockLayoutManager`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Docking.DockLayoutManager), the handler switches the MDI style if the layout version is `"1.0"`:
 
