@@ -46,7 +46,7 @@ The `LayoutUpgrade` event is raised if the restored layout version is different 
 
 - [Save/Restore Control Layout](https://docs.devexpress.com/WPF/7391/common-concepts/saving-and-restoring-layouts)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-dock-layout-manager-upgrade-layouts-between-versions&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-dock-layout-manager-upgrade-layouts-between-versions&~~~was_helpful=no)
 
