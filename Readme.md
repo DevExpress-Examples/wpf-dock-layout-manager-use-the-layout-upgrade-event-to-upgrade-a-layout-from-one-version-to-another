@@ -35,7 +35,7 @@ End Sub
 
 We raise `LayoutUpgrade` if the restored layout version is different from the current `LayoutVersion` value. I.e., you can increase `LayoutVersion` in a new version of your application and do the required changes in the `LayoutUpgrade` event handler.
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-dock-layout-manager-use-the-layout-upgrade-event-to-upgrade-a-layout-from-one-version-to-another&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-dock-layout-manager-use-the-layout-upgrade-event-to-upgrade-a-layout-from-one-version-to-another&~~~was_helpful=no)
 
